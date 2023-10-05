@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
 class BottomNavbar extends StatefulWidget {
-  const BottomNavbar({super.key});
+  final int selectedIndex;
+  final Function(int) onTap;
+  
+  const BottomNavbar({
+    Key? key,
+    required this.selectedIndex,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();
 }
 
 class _BottomNavbarState extends State<BottomNavbar> {
-
-  int _selectedIndex = 0;
   // static const TextStyle optionStyle =
   //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   // static const List<Widget> _widgetOptions = <Widget>[
@@ -27,11 +32,11 @@ class _BottomNavbarState extends State<BottomNavbar> {
   //   ),
   // ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     widget.selectedIndex = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +51,13 @@ class _BottomNavbarState extends State<BottomNavbar> {
             label: 'Business',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.notification_add),
+            label: 'Reminder',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: widget.selectedIndex,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: (int index) => widget.onTap(index),
       );
   }
 }
