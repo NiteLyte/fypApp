@@ -57,7 +57,8 @@ class _WrapperState extends State<Wrapper> {
         centerTitle: true,
       ),
       body: Center(child: _pages.elementAt(selectedIndex)),
-      bottomNavigationBar: BottomNavbar(selectedIndex: selectedIndex, onTap: _onItemTapped),
+      bottomNavigationBar:
+          BottomNavbar(selectedIndex: selectedIndex, onTap: _onItemTapped),
     );
   }
 }
