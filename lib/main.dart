@@ -2,7 +2,9 @@ import 'package:alarm/alarm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_app/screens/expiry_manager.dart';
 import 'package:fyp_app/screens/home_screen.dart';
+import 'package:fyp_app/widgets/bottom_navbar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,43 @@ Future<void> signInAnonymously() async {
   }
 }
 
+class Wrapper extends StatefulWidget {
+  const Wrapper({super.key});
+
+  @override
+  State<Wrapper> createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
+  int selectedIndex = 0;
+  final List<Widget> _pages = [
+    // Define your pages here
+    HomeScreen(),
+    Text("Business Page"),
+    ExpiryManagerScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    // Callback function when a navigation item is tapped.
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Text("My Cooking Buddy"),
+        centerTitle: true,
+      ),
+      body: Center(child: _pages.elementAt(selectedIndex)),
+      bottomNavigationBar: BottomNavbar(selectedIndex: selectedIndex, onTap: _onItemTapped),
+    );
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -30,7 +69,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: Wrapper(),
     );
   }
 }

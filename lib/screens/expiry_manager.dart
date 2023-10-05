@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fyp_app/screens/edit_alarm.dart';
-import 'package:fyp_app/widget/expiry_alarm_tile.dart';
+import 'package:fyp_app/widgets/expiry_alarm_tile.dart';
 import 'package:intl/intl.dart';
 
 class ExpiryManagerScreen extends StatefulWidget {

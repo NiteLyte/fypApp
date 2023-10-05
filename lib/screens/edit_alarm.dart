@@ -77,10 +77,6 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
       setState(() {
         _selectedDate.value = selectedDate;
         selectedDateTime = selectedDate;
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //   content: Text(
-        //       'Selected: ${_selectedDate.value.day}/${_selectedDate.value.month}/${_selectedDate.value.year}   ${_selectedDate.value.hour}:${_selectedDate.value.minute}'),
-        // ));
       });
     }
   }
@@ -99,21 +95,6 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
       showNotification = true;
       assetAudio = 'assets/one_piece.mp3';
     }
-    // } else {
-    //   selectedDateTime = widget.alarmSettings!.dateTime;
-    //   loopAudio = widget.alarmSettings!.loopAudio;
-    //   vibrate = widget.alarmSettings!.vibrate;
-    //   volumeMax = widget.alarmSettings!.volumeMax;
-    //   showNotification = widget.alarmSettings!.notificationTitle != null &&
-    //       widget.alarmSettings!.notificationTitle!.isNotEmpty &&
-    //       widget.alarmSettings!.notificationBody != null &&
-    //       widget.alarmSettings!.notificationBody!.isNotEmpty;
-    //   assetAudio = widget.alarmSettings!.assetAudioPath;
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text(
-    //         'Selected: ${selectedDateTime.day}/${selectedDateTime.month}/${selectedDateTime.year}'),
-    //   ));
-    // }
   }
 
   Future<void> pickDate() async {
@@ -140,9 +121,22 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
         ? DateTime.now().millisecondsSinceEpoch % 10000
         : widget.alarmSettings!.id;
 
+    int daysBetween(DateTime from, DateTime to) {
+      from = DateTime(from.year, from.month, from.day);
+      to = DateTime(to.year, to.month, to.day);
+      return (to.difference(from).inHours / 24).round();
+    }
+
+    final difference = daysBetween(selectedDateTime, DateTime.now());
+    final ringring = difference > 3
+        ? selectedDateTime.subtract(const Duration(days: 3))
+        : DateTime.now()
+            .copyWith(second: 0, millisecond: 0)
+            .add(const Duration(days: 1));
+
     final alarmSettings = AlarmSettings(
       id: id,
-      dateTime: selectedDateTime.subtract(const Duration(days: 3)),
+      dateTime: ringring,
       loopAudio: loopAudio,
       vibrate: vibrate,
       volumeMax: volumeMax,
@@ -185,7 +179,7 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
       if (res) Navigator.pop(context, true);
     });
     db.doc(documentId).delete().then(
-            (doc) => print("Firebase: Document deleted!"),
+        (doc) => print("Firebase: Document deleted!"),
         onError: (e) => print("Firebase: Error updating document $e"));
   }
 
