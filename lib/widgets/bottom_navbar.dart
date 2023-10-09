@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BottomNavbar extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onTap;
-  
+
   const BottomNavbar({
     Key? key,
     required this.selectedIndex,
@@ -41,23 +41,23 @@ class _BottomNavbarState extends State<BottomNavbar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notification_add),
-            label: 'Reminder',
-          ),
-        ],
-        currentIndex: widget.selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: (int index) => widget.onTap(index),
-      );
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_box),
+          label: 'New Recipe',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notification_add),
+          label: 'Reminder',
+        ),
+      ],
+      currentIndex: widget.selectedIndex,
+      selectedItemColor: Colors.amber[800],
+      onTap: (int index) => widget.onTap(index),
+    );
   }
 }

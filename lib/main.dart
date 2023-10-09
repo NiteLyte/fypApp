@@ -2,9 +2,11 @@ import 'package:alarm/alarm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_app/screens/add_recipe.dart';
 import 'package:fyp_app/screens/expiry_manager.dart';
 import 'package:fyp_app/screens/home_screen.dart';
 import 'package:fyp_app/widgets/bottom_navbar.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,12 +36,6 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   int selectedIndex = 0;
-  final List<Widget> _pages = [
-    // Define your pages here
-    HomeScreen(),
-    Text("Business Page"),
-    ExpiryManagerScreen(),
-  ];
 
   void _onItemTapped(int index) {
     // Callback function when a navigation item is tapped.
@@ -50,10 +46,21 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      // Define your pages here
+      HomeScreen(onTap: _onItemTapped),
+      AddRecipe(onTap: _onItemTapped),
+      ExpiryManagerScreen(),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("My Cooking Buddy"),
+        title: Text("My Cooking Buddy",
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            )),
         centerTitle: true,
       ),
       body: Center(child: _pages.elementAt(selectedIndex)),

@@ -1,7 +1,6 @@
 import 'dart:async';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:alarm/alarm.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fyp_app/screens/edit_alarm.dart';
@@ -86,12 +85,22 @@ class _ExpiryManagerScreenState extends State<ExpiryManagerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Text("Expiry Manager",
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 22,
+            )),
+      ),
       body: SafeArea(
         child: Container(
           child: Column(
             children: [
               Container(
-                height: MediaQuery.sizeOf(context).height * 0.8,
+                height: MediaQuery.sizeOf(context).height * 0.7,
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection("expiry_infos")
