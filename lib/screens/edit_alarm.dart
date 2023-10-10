@@ -94,6 +94,13 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
       volumeMax = false;
       showNotification = true;
       assetAudio = 'assets/one_piece.mp3';
+    } else {
+      selectedDateTime = widget.alarmSettings!.dateTime;
+      loopAudio = true;
+      vibrate = true;
+      volumeMax = false;
+      showNotification = true;
+      assetAudio = 'assets/one_piece.mp3';
     }
   }
 
@@ -127,7 +134,7 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
       return (to.difference(from).inHours / 24).round();
     }
 
-    final difference = daysBetween(selectedDateTime, DateTime.now());
+    final difference = daysBetween(DateTime.now(), selectedDateTime);
     final ringring = difference > 3
         ? selectedDateTime.subtract(const Duration(days: 3))
         : DateTime.now()
@@ -158,9 +165,10 @@ class _EditAlarmModalState extends State<EditAlarmModal> with RestorationMixin {
     });
     final data = {
       'alarm_id': alarm.id.toString(),
-      'expiry': Timestamp.fromDate(alarm.dateTime.add(const Duration(days: 3))),
+      'expiry': Timestamp.fromDate(selectedDateTime),
       'food_name': textController.text,
     };
+    print(data);
     if (creating) {
       db.add(data).then((documentSnapshot) =>
           print("Added new alarm data with ID: ${documentSnapshot.id}"));
